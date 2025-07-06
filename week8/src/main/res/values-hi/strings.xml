@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">week8</string>
+    <string name="multi_language_screen_title">बहु भाषा स्क्रीन</string>
+    <string name="select_language">अपनी इच्छित भाषा चुनें</string>
+    <string name="language_english">अंग्रेज़ी</string>
+    <string name="language_hindi">हिंदी</string>
+</resources>

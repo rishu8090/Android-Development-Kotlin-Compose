@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">week8</string>
+    <string name="multi_language_screen_title">Multi Language Screen</string>
+    <string name="select_language">Select your desired language</string>
+    <string name="language_english">English</string>
+    <string name="language_hindi">Hindi</string>
+</resources>
