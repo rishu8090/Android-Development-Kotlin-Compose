@@ -120,7 +120,6 @@ fun SignUpBox(
 }
 
 
-
 @Composable
 fun CustomTextField(
     modifier: Modifier = Modifier,

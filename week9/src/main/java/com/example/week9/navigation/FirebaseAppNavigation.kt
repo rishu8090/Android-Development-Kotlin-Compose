@@ -22,8 +22,8 @@ fun FirebaseAppNavigation(modifier: Modifier = Modifier) {
 
         composable(
             route = NavigationDestination.SignIn.route,
-            enterTransition = {slideIntoContainerAnimation()},
-            exitTransition = {slideOutOfContainerAnimation()}
+            enterTransition = { slideIntoContainerAnimation() },
+            exitTransition = { slideOutOfContainerAnimation() }
         ) {
             SignInScreen(
                 onSignUpClick = {
@@ -36,9 +36,9 @@ fun FirebaseAppNavigation(modifier: Modifier = Modifier) {
 
         composable(
             route = NavigationDestination.SignUp.route,
-            enterTransition = {slideIntoContainerAnimation()},
-            exitTransition = {slideOutOfContainerAnimation()}
-        ){
+            enterTransition = { slideIntoContainerAnimation() },
+            exitTransition = { slideOutOfContainerAnimation() }
+        ) {
             SignUpScreen(
                 onBack = { navController.popBackStack() }
             )

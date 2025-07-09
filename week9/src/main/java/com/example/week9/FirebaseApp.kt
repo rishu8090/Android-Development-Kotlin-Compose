@@ -7,7 +7,7 @@ import com.example.week9.navigation.FirebaseAppNavigation
 import com.example.week9.ui.theme.Intro_to_jetpack_composeTheme
 
 @Composable
-fun FirebaseApp(modifier: Modifier = Modifier){
+fun FirebaseApp(modifier: Modifier = Modifier) {
     Intro_to_jetpack_composeTheme {
         FirebaseAppNavigation()
     }

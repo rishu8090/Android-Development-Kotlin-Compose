@@ -73,7 +73,7 @@ fun SignUpScreen(
                 onPasswordClear = { password = "" },
                 actionButtonText = "Sign Up",
                 onActionButtonClick = {
-                    authViewModel.signUp(email,password)
+                    authViewModel.signUp(email, password)
                 }
             )
 

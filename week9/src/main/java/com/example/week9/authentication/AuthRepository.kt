@@ -10,10 +10,10 @@ interface AuthRepository {
 
 class AuthRepositoryImpl @Inject constructor(
     private val auth: FirebaseAuth
-): AuthRepository {
+) : AuthRepository {
 
     override fun signUp(email: String, password: String) {
-         auth.signInWithEmailAndPassword(email, password )
+        auth.createUserWithEmailAndPassword(email, password)
     }
 
     override fun signIn(email: String, password: String) {
