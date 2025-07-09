@@ -46,6 +46,14 @@
       </SelectionState>
       <SelectionState runConfigName="week9">
         <option name="selectionMode" value="DROPDOWN" />
+        <DropdownSelection timestamp="2025-07-09T10:37:51.375446200Z">
+          <Target type="DEFAULT_BOOT">
+            <handle>
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=CIJRZD9DNRVCO7X4" />
+            </handle>
+          </Target>
+        </DropdownSelection>
+        <DialogSelection />
       </SelectionState>
       <SelectionState runConfigName="week1">
         <option name="selectionMode" value="DROPDOWN" />

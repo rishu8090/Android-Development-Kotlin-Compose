@@ -9,14 +9,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.week9.authentication.signin.CustomTextField
-import com.example.week9.authentication.signin.VerticalSpacer
+import com.example.week9.components.VerticalSpacer
 
 @Composable
 fun CompanyInfo(modifier: Modifier) {
@@ -40,11 +36,11 @@ fun EmailAndPasswordContent(
     onPasswordChanged: (String) -> Unit,
     onEmailClear: () -> Unit,
     onPasswordClear: () -> Unit,
-    actionButtonText: String,
+    actionButtonText: String,  // Sign in OR Sign up
     onActionButtonClick: () -> Unit
-    ) {
+) {
     Column(
-        modifier = Modifier,
+        modifier = modifier,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -53,8 +49,8 @@ fun EmailAndPasswordContent(
             modifier = Modifier.fillMaxWidth(),
             value = email,
             onValueChange = onEmailChanged,
-            placeHolderText = "Enter your Email here.",
-            onClear =  onEmailClear
+            placeHolderText = "Enter your Email ",
+            onClear = onEmailClear
         )
 
         VerticalSpacer(12)
@@ -63,7 +59,7 @@ fun EmailAndPasswordContent(
             modifier = Modifier.fillMaxWidth(),
             value = password,
             onValueChange = onPasswordChanged,
-            placeHolderText = "Enter your Password here.",
+            placeHolderText = "Enter your Password ",
             isPasswordField = true,
             onClear = onPasswordClear
         )
@@ -71,7 +67,7 @@ fun EmailAndPasswordContent(
         VerticalSpacer(16)
 
         Button(onClick = onActionButtonClick) {
-            Text(text =  actionButtonText)
+            Text(text = actionButtonText)
         }
     }
 }

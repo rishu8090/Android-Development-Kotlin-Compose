@@ -20,25 +20,32 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.week9.authentication.AuthViewModel
 import com.example.week9.authentication.CompanyInfo
 import com.example.week9.authentication.EmailAndPasswordContent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpScreen(
-    onBack: () -> Unit
-){
+    onBack: () -> Unit,
+    authViewModel: AuthViewModel = hiltViewModel()
+) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text(text = "Sign Up") },
+            TopAppBar(
+                title = { Text(text = "Sign Up") },
                 navigationIcon = {
-                    IconButton(onClick = {onBack}) {
-                        Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = null)
+                    IconButton(onClick = { onBack }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = null
+                        )
                     }
                 })
 
@@ -51,6 +58,7 @@ fun SignUpScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
             CompanyInfo(modifier = Modifier.weight(1f))
 
             EmailAndPasswordContent(
@@ -59,15 +67,23 @@ fun SignUpScreen(
                     .padding(16.dp),
                 email = email,
                 password = password,
-                onEmailChanged = {email = it},
-                onPasswordChanged = {password = it},
-                onEmailClear = {email = ""},
-                onPasswordClear = {password = ""},
-               actionButtonText = "Sign Up",
-                onActionButtonClick = {}
+                onEmailChanged = { email = it },
+                onPasswordChanged = { password = it },
+                onEmailClear = { email = "" },
+                onPasswordClear = { password = "" },
+                actionButtonText = "Sign Up",
+                onActionButtonClick = {
+                    authViewModel.signUp(email,password)
+                }
             )
 
             Box(modifier = Modifier.weight(1f))
         }
     }
+}
+
+@Preview
+@Composable
+fun SignUpScreenPreview() {
+//    SignUpScreen()
 }

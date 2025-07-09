@@ -3,18 +3,17 @@ package com.example.week9.authentication.signin
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.shrinkHorizontally
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -36,17 +35,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.week9.R
+import com.example.week9.authentication.AuthViewModel
 import com.example.week9.authentication.CompanyInfo
 import com.example.week9.authentication.EmailAndPasswordContent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignInScreen() {
+fun SignInScreen(
+    onSignUpClick: () -> Unit,
+    authViewModel: AuthViewModel = hiltViewModel()
+) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
     Scaffold(
         topBar = {
             TopAppBar(title = { Text(text = "Sign In") })
@@ -54,17 +58,17 @@ fun SignInScreen() {
     ) { innerPadding ->
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding),
+                .padding(innerPadding)
+                .fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            CompanyInfo(modifier = Modifier.weight(1f))
+            CompanyInfo(modifier = Modifier.weight(1f))   // divide signIn screen in three parts, 1st
 
             EmailAndPasswordContent(
                 modifier = Modifier
-                    .weight(1f)
+                    .weight(1f)     // 2nd
                     .padding(16.dp),
                 email = email,
                 password = password,
@@ -73,10 +77,15 @@ fun SignInScreen() {
                 onEmailClear = { email = "" },
                 onPasswordClear = { password = "" },
                 actionButtonText = "Sign In",
-                onActionButtonClick = {}
+                onActionButtonClick = {
+                    authViewModel.signIn(email, password)
+                }
             )
 
-            SignUpBox(modifier = Modifier.weight(1f))
+            SignUpBox(
+                modifier = Modifier.weight(1f),  // 3rd
+                onSignUpClick = onSignUpClick
+            )
         }
     }
 }
@@ -89,7 +98,10 @@ fun SignInScreen() {
 
 
 @Composable
-fun SignUpBox(modifier: Modifier) {
+fun SignUpBox(
+    modifier: Modifier = Modifier,
+    onSignUpClick: () -> Unit
+) {
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -98,17 +110,16 @@ fun SignUpBox(modifier: Modifier) {
     )
     {
         Text(
+            modifier = Modifier.clickable { onSignUpClick() },  // this onSignUpClick Should be called as a fun.
             text = "Sign Up instead?",
             style = MaterialTheme.typography.titleMedium,
             textDecoration = TextDecoration.Underline,
             color = Color.Blue
         )
-
     }
 }
 
-@Composable
-fun VerticalSpacer(size: Int) = Spacer(modifier = Modifier.height(size.dp))
+
 
 @Composable
 fun CustomTextField(
@@ -117,12 +128,11 @@ fun CustomTextField(
     onValueChange: (String) -> Unit,
     placeHolderText: String,
     onClear: () -> Unit,
-    // showPassword: () -> Unit = {},  // here is something
     isPasswordField: Boolean = false
 ) {
 
     var showPassword by remember { mutableStateOf(false) }   // next to next line is a state with key, if key change composition will occur.
-    var passwordIconResource by remember(showPassword) { mutableIntStateOf(if (showPassword) R.drawable.ic_eye_filled else R.drawable.ic_eye_outlined) }
+    var passwordIconResource by remember(showPassword) { mutableIntStateOf(if (showPassword) R.drawable.ic_eye_filled else R.drawable.ic_eye_filled) }
     var visualTransformation by remember(showPassword) { mutableStateOf(if (isPasswordField && !showPassword) PasswordVisualTransformation() else VisualTransformation.None) }
 
     OutlinedTextField(
@@ -162,8 +172,8 @@ fun CustomTextField(
     )
 }
 
-@Preview
-@Composable
-fun SignInScreenPreview(){
-    SignInScreen()
-}
+//@Preview
+//@Composable
+//fun SignInScreenPreview() {
+//    SignInScreen()
+//}
