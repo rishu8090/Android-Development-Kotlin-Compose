@@ -36,7 +36,8 @@ fun EmailAndPasswordContent(
     onPasswordChanged: (String) -> Unit,
     onEmailClear: () -> Unit,
     onPasswordClear: () -> Unit,
-    actionButtonText: String,  // Sign in OR Sign up
+    actionButtonContent: @Composable () -> Unit,    // Replaced by this    actionButtonText: String,  // Sign in OR Sign up
+    enableActionButton: Boolean = true,
     onActionButtonClick: () -> Unit
 ) {
     Column(
@@ -66,8 +67,11 @@ fun EmailAndPasswordContent(
 
         VerticalSpacer(16)
 
-        Button(onClick = onActionButtonClick) {
-            Text(text = actionButtonText)
+        Button(
+            onClick = onActionButtonClick,
+            enabled = enableActionButton
+        ) {
+            actionButtonContent()
         }
     }
 }

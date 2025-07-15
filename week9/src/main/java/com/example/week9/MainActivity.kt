@@ -3,25 +3,22 @@ package com.example.week9
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.week9.authentication.signin.SignInScreen
-import com.example.week9.authentication.signup.SignUpScreen
-import com.example.week9.ui.theme.Intro_to_jetpack_composeTheme
+import androidx.activity.viewModels
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import com.example.week9.settings.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.getValue
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    val settingsViewModel by viewModels<SettingsViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            FirebaseApp()
+            val startDestination by settingsViewModel.startDestination.collectAsState()
+            FirebaseApp(startDestination)
         }
     }
 }
@@ -43,6 +40,16 @@ then some dependency you have to include, some in root level build file and some
 Enable the authentication, on the firebase app in build section. you can use any type of authentication or multiple authentication.
 add Dependency for authentication, by firebase/docs/auth/android/password-auth. in build module section.
 
-*/
+to view  external source codes of the used fun you can go project view and go to the folder of External libraries, where you can find all external files code of the project.
+
+ in firestore,  SQL -> row and columns
+        NoSQL -> Not a SQL
+
+        in NoSQL,
+        json
+        Collection ->  Tables (in SQL)
+        Document -> Rows (in SQL)
+        Data -> Columns (in SQL)
+ */
 
 

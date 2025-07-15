@@ -64,9 +64,6 @@
       <SelectionState runConfigName="DatabaseScreenPreview">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="MainActivity">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="FourPartCardPreview">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
