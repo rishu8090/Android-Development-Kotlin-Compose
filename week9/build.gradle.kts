@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.hiltAndroid)
     alias(libs.plugins.ksp)
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -58,11 +59,14 @@ dependencies {
 
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
+    implementation(libs.play.services.measurement.api)
+    ksp(libs.hilt.android.compiler)
+
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    ksp(libs.hilt.android.compiler)
+
 
     implementation(libs.androidx.navigation.compose)
 
@@ -84,6 +88,10 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics.ndk)
+    implementation(libs.firebase.storage)
+    implementation (libs.firebase.messaging)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

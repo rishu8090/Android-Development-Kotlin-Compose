@@ -1,25 +1,65 @@
 package com.example.week9
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import com.example.week9.fcm.MessagingService
 import com.example.week9.settings.SettingsViewModel
+import com.example.week9.utils.Constants
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.getValue
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    val settingsViewModel by viewModels<SettingsViewModel>()
+    private val settingsViewModel by viewModels<SettingsViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             val startDestination by settingsViewModel.startDestination.collectAsState()
-            FirebaseApp(startDestination)
+            FirebaseApp(startDestination = startDestination)
         }
+        retrieveFCMToken()
+        // sample token -> dnpLZU9dRpuY5mRLfz7Zp3:APA91bFdkmOrwHAjpVQ6cn6hjGsVLUkUjWNGVd4M4IGhGdSpe7Oj15_JFtccy9G1Grikwrl_eQslpC9GFpfWcxNkTHGGnx6qCg-i9rO2IxakL9T9waRBQFE
+        val messagingServiceIntent = Intent(this, MessagingService::class.java)
+        startService(messagingServiceIntent)
+    }
+
+    fun createNotificationChannel(context: Context){
+        val notificationChannel = NotificationChannel(
+            Constants.NOTIFICATION_CHANNEL_id,
+            "General Notification",
+            NotificationManager.IMPORTANCE_DEFAULT
+        ).apply {
+            description = "This is a channel for showing general Notification."
+        }
+
+        val notificationManager = context.getSystemService(NotificationManager::class.java)
+        notificationManager.createNotificationChannel(notificationChannel)
+    }
+
+    fun retrieveFCMToken() {  // this fun can you copy from docs of firebase messaging.
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.d("TAG", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+            Log.d("TAG", "retrieveFCMToken: $token")
+        })
     }
 }
 
@@ -49,7 +89,9 @@ to view  external source codes of the used fun you can go project view and go to
         json
         Collection ->  Tables (in SQL)
         Document -> Rows (in SQL)
-        Data -> Columns (in SQL)
+        Data -> Columns (in SQL)    // this is part of firebase Database.
+
+        learn about external tools.
  */
 
 

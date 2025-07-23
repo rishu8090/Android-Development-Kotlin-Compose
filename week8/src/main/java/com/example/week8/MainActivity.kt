@@ -26,14 +26,13 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val viewModel by viewModels<MultiLanguageViewModel>()
-
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             Intro_to_jetpack_composeTheme {
 //                BackgroundWorkScreen()
-//                ImageUploadScreen()
-                MultiLanguageScreen()
+                ImageUploadScreen()
+//                MultiLanguageScreen()
             }
         }
 

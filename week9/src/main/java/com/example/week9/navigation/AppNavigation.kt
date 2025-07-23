@@ -13,15 +13,17 @@ import com.example.week9.authentication.signin.SignInScreen
 import com.example.week9.authentication.signup.SignUpScreen
 import com.example.week9.components.slideIntoContainerAnimation
 import com.example.week9.components.slideOutOfContainerAnimation
+import com.example.week9.detail.DetailScreen
 import com.example.week9.home.HomeScreen
+import com.example.week9.home.HomeViewModel
 
 @Composable
 fun AppNavigation(
     modifier: Modifier = Modifier,
     startDestination: NavigationDestination
 ) {
-
     val navController = rememberNavController()
+
     NavHost(
         modifier = modifier,
         navController = navController,
@@ -45,8 +47,8 @@ fun AppNavigation(
 
         composable(
             route = NavigationDestination.SignUp.route,
-            enterTransition = { slideIntoContainerAnimation(towards = SlideDirection.Start) },
-            exitTransition = { slideOutOfContainerAnimation(towards = SlideDirection.End) }
+            enterTransition = { slideIntoContainerAnimation(towards = SlideDirection.Left) },
+            exitTransition = { slideOutOfContainerAnimation(towards = SlideDirection.Right) }
         ) {backStackEntry ->
             val parentEntry =
                 remember(backStackEntry){navController.getBackStackEntry(NavigationDestination.SignIn.route)}
@@ -58,20 +60,42 @@ fun AppNavigation(
         }
 
         composable(
-            route = NavigationDestination.Home.route,
-//            enterTransition = { slideIntoContainerAnimation(towards = SlideDirection.Start) },
-//            exitTransition = { slideOutOfContainerAnimation(towards = SlideDirection.End) }
-        ) {
-            HomeScreen()
-        }
-
-        composable(
             route = NavigationDestination.Splash.route,
-            enterTransition = { slideIntoContainerAnimation() },
-            exitTransition = { slideOutOfContainerAnimation() }
+            enterTransition = { slideIntoContainerAnimation(towards = SlideDirection.Down) },
+            exitTransition = { slideOutOfContainerAnimation(towards = SlideDirection.Down) }
         ) {
             SplashScreen()
         }
+
+        composable(
+            route = NavigationDestination.Home.route,
+            enterTransition = { slideIntoContainerAnimation(towards = SlideDirection.Left) },
+            exitTransition = { slideOutOfContainerAnimation(towards = SlideDirection.Right) }
+        ) {
+            val homeViewModel: HomeViewModel = hiltViewModel()
+            HomeScreen(
+                homeViewModel = homeViewModel,
+                onDetailClick = {
+                    navController.navigate(NavigationDestination.Detail.route)
+                }
+            )
+        }
+
+        composable(
+            route = NavigationDestination.Detail.route,
+            enterTransition = { slideIntoContainerAnimation(towards = SlideDirection.Left) },
+            exitTransition = { slideOutOfContainerAnimation(towards = SlideDirection.Right) }
+        ) { backStackEntry ->
+            val parentEntry =
+                remember(backStackEntry){ navController.getBackStackEntry(NavigationDestination.Home.route)
+            }
+            DetailScreen(
+                homeViewModel = hiltViewModel(parentEntry),
+                onBackClick = {navController.popBackStack()}
+            )
+        }
+
+
     }
 }
 
